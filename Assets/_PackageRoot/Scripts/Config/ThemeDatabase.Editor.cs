@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+using TriInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,13 +6,14 @@ using UnityEngine;
 namespace Unity.Theme
 {
 #pragma warning disable CA2235 // Mark all non-serializable fields
-    public sealed partial class ThemeDatabase : SerializedScriptableObject
+    [DeclareVerticalGroup("B"), DeclareHorizontalGroup("ColorButtons")]
+    public sealed partial class ThemeDatabase : ScriptableObject
     {
-        [BoxGroup("B", false), HorizontalGroup("B/H")]
-        [TitleGroup("B/H/Settings"), PropertyOrder(-10)]                            
+        [Group("B")]
+        [Title("Settings"), PropertyOrder(-10)]                            
         public bool debug = true;
-                                    
-        [TitleGroup("B/H/Settings"), ValueDropdown("ThemeNames")]
+        [Group("B")]
+        [Dropdown("ThemeNames")]
         [LabelText("Current Theme"), PropertyOrder(-9), ShowInInspector]           
         public string CurrentThemeName
         {
@@ -32,30 +33,30 @@ namespace Unity.Theme
 
 
         [PropertyOrder(-8), PropertySpace]
-        [ListDrawerSettings(DraggableItems = true, Expanded = false, NumberOfItemsPerPage = 20, ShowItemCount = false, HideAddButton = false, HideRemoveButton = true)]
-        [TableList(AlwaysExpanded = false, NumberOfItemsPerPage = 20, IsReadOnly = true, HideToolbar = false, ShowPaging = true)]
-        [SerializeField, HideReferenceObjectPicker]
-        List<ColorDataRef> colors = new List<ColorDataRef>();
+        [ListDrawerSettings(Draggable = true, AlwaysExpanded = false, HideAddButton = false, HideRemoveButton = true)]
+        [TableList(AlwaysExpanded = false, HideAddButton = false, HideRemoveButton = false)]
+        [SerializeField, HideReferencePicker]
+        private List<ColorDataRef> colors = new List<ColorDataRef>();
 
         [GUIColor(0.8f, 1.0f, 0.8f, 1)]
-        [PropertyOrder(-7), LabelText("ADD COLOR")]
-        [ButtonGroup("ColorButtons"), Button(ButtonSizes.Medium, Style = ButtonStyle.Box)]
-        void AddColor() => AddColor("New Color", DefaultColor);
+        [PropertyOrder(-9), PropertySpace]
+        [Button(ButtonSizes.Medium, "ADD THEME")]
+        private void _AddTheme() => AddTheme("New Theme");
 
         [GUIColor(0.8f, 1.0f, 0.8f, 1)]
-        [PropertyOrder(-6), LabelText("SORT")]
-        [ButtonGroup("ColorButtons"), Button(ButtonSizes.Medium, Style = ButtonStyle.Box)]
-        void SortColors()
-        {
-            foreach (var theme in themes)
-            {
-                theme.colors.Sort(ColorData.Compare);
-            }
-        }
+        [PropertyOrder(-7), PropertySpace]
+        [Group("ColorButtons"), Button(ButtonSizes.Medium, "ADD COLOR")]
+        private void _AddColor() => AddColor("New Color", DefaultColor);
 
-        [SerializeField, HideReferenceObjectPicker, PropertySpace]
-        [ListDrawerSettings(DraggableItems = false, Expanded = true, NumberOfItemsPerPage = 20, ShowItemCount = false, HideAddButton = false, HideRemoveButton = true)]
-        List<ThemeData> themes = new List<ThemeData>();
+        [GUIColor(0.8f, 1.0f, 0.8f, 1)]
+        [PropertyOrder(-6), PropertySpace]
+        [Group("ColorButtons"), Button(ButtonSizes.Medium, "SORT COLORS")]
+        private void _SortColors() => SortColors();
+
+        [PropertyOrder(-9)]
+        [SerializeField, HideReferencePicker, PropertySpace]
+        [ListDrawerSettings(Draggable = false, AlwaysExpanded = true, HideAddButton = true, HideRemoveButton = true)]
+        private List<ThemeData> themes = new List<ThemeData>();
 
         private void OnValidate()
         {

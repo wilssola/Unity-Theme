@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+using TriInspector;
 using UnityEngine;
 using UnityEngine.UI;
 

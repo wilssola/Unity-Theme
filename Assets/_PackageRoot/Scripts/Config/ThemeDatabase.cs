@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+using TriInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Unity.Theme
 {
 #pragma warning disable CA2235 // Mark all non-serializable fields
-    public sealed partial class ThemeDatabase : SerializedScriptableObject
+    public sealed partial class ThemeDatabase : ScriptableObject
     {
                static       Color               DefaultColor                => Color.white;
         public delegate     void                OnTheme                     (ThemeData theme);
@@ -106,6 +106,13 @@ namespace Unity.Theme
                         color   = color
                     });
                 }
+            }
+        }
+        public void SortColors()
+        {
+            foreach (var theme in themes)
+            {
+                theme.colors.Sort(ColorData.Compare);
             }
         }
 

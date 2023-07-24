@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+using TriInspector;
 using System;
 using UnityEngine;
 
@@ -9,12 +9,12 @@ namespace Unity.Theme
     {
         [HideInInspector]                           public string   guid;
         [ReadOnly]
-        [TableColumnWidth(150, false)]              public string   name = "New";
-        [TableColumnWidth(50, true)]                public Color    color = Color.white;
+                      public string   name = "New";
+                        public Color    color = Color.white;
 
-        [TableColumnWidth(25, false)]
-        [HideLabel]
-        [Button, LabelText("X")] void X() => ThemeDatabaseInitializer.Config.RemoveColor(this);
+        
+        
+        [Button("X")] void X() => ThemeDatabaseInitializer.Config.RemoveColor(this);
 
         public static int Compare(ColorData l, ColorData r)
         {

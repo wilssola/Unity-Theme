@@ -1,15 +1,16 @@
-using Sirenix.OdinInspector;
+using TriInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Unity.Theme.Binders
 {
-    [ExecuteAlways, ExecuteInEditMode]
+    [ExecuteAlways, ExecuteInEditMode, DeclareHorizontalGroup("H")]
     public abstract class BaseColorBinder : MonoBehaviour
     {
 
         [SerializeField, HideInInspector]                                   string          colorGuid;
-        [HorizontalGroup("H"), ValueDropdown("GetColors"), ShowInInspector] string          ColorName
+        [Group("H"), Dropdown("GetColors"), ShowInInspector]
+        string ColorName
         {
             get
             {
@@ -26,9 +27,9 @@ namespace Unity.Theme.Binders
             }
         }
         [GUIColor(1.0f, 0.5f, 0.5f)]
-        [HorizontalGroup("H", 60), Button("RESET")]                         void            ResetColor() { colorGuid = null; }
+        [Group("H"), Button("RESET")]                         void            ResetColor() { colorGuid = null; }
         [SerializeField]                                                    bool            overrideAlpha;
-        [SerializeField, ShowIf("overrideAlpha"), PropertyRange(0f, 1f)]    float           alpha = 1f;
+        [SerializeField, ShowIf("overrideAlpha"), Range(0f, 1f)]    float           alpha = 1f;
 
         private                                                             List<string>    GetColors() => ThemeDatabaseInitializer.Config.ColorNames;
 
