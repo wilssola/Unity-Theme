@@ -33,8 +33,8 @@ namespace Unity.Theme
 
 
         [PropertyOrder(-8), PropertySpace]
-        [ListDrawerSettings(Draggable = true, AlwaysExpanded = false, HideAddButton = false, HideRemoveButton = true)]
-        [TableList(AlwaysExpanded = false, HideAddButton = false, HideRemoveButton = false)]
+        [ListDrawerSettings(Draggable = true, AlwaysExpanded = true, HideAddButton = true, HideRemoveButton = true)]
+        [TableList(Draggable = true, AlwaysExpanded = true, HideAddButton = true, HideRemoveButton = true)]
         [SerializeField, HideReferencePicker]
         private List<ColorDataRef> colors = new List<ColorDataRef>();
 
