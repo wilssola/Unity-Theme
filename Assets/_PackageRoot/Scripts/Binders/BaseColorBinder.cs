@@ -7,9 +7,8 @@ namespace Unity.Theme.Binders
     [ExecuteAlways, ExecuteInEditMode, DeclareHorizontalGroup("H")]
     public abstract class BaseColorBinder : MonoBehaviour
     {
-
-        [SerializeField, HideInInspector]                                   string          colorGuid;
-        [Group("H"), Dropdown("GetColors"), ShowInInspector]
+        [SerializeField, HideInInspector] string colorGuid;
+        [Group("H"), Dropdown("GetColors"), ShowInInspector, HideLabel]
         string ColorName
         {
             get
@@ -26,12 +25,14 @@ namespace Unity.Theme.Binders
                     colorGuid = colorData.guid;
             }
         }
+        
         [GUIColor(1.0f, 0.5f, 0.5f)]
-        [Group("H"), Button("RESET")]                         void            ResetColor() { colorGuid = null; }
-        [SerializeField]                                                    bool            overrideAlpha;
-        [SerializeField, ShowIf("overrideAlpha"), Range(0f, 1f)]    float           alpha = 1f;
+        [Group("H"), Button("RESET")] private void ResetColor() { colorGuid = null; }
+        
+        [SerializeField] bool overrideAlpha;
+        [SerializeField, ShowIf("overrideAlpha"), Range(0f, 1f)] float  alpha = 1f;
 
-        private                                                             List<string>    GetColors() => ThemeDatabaseInitializer.Config.ColorNames;
+        private List<string> GetColors() => ThemeDatabaseInitializer.Config.ColorNames;
 
         protected virtual void Awake()
         {
@@ -72,9 +73,9 @@ namespace Unity.Theme.Binders
             }
         }
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnValidate() => TrySetColor(ThemeDatabaseInitializer.Config.CurrentTheme);
-//#endif
+#endif
         protected virtual Color GetColor(ColorData colorData)
         {
             var result = colorData.color;
