@@ -72,9 +72,9 @@ namespace Unity.Theme.Binders
             }
         }
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         private void OnValidate() => TrySetColor(ThemeDatabaseInitializer.Config.CurrentTheme);
-#endif
+//#endif
         protected virtual Color GetColor(ColorData colorData)
         {
             var result = colorData.color;
